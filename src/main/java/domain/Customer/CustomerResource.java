@@ -19,13 +19,8 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriBuilder;
 
-
-
-
-
 @Path("/customers")
 public class CustomerResource {
-	
 	
 	@Inject
 	private CustomerRepository customerRepository;
@@ -45,9 +40,7 @@ public class CustomerResource {
         if (customerRepository.contains(customer.getId())) {
             throw new ForbiddenException("Customer already exists.");
         }
-
         customerRepository.update(customer);
-
         URI location = UriBuilder.fromResource(CustomerResource.class).path("{id}").build(customer.getId());
         return Response.created(location).build();
     }
