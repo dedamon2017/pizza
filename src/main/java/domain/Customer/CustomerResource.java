@@ -8,6 +8,7 @@ import java.util.Objects;
 import javax.inject.Inject;
 import javax.ws.rs.BadRequestException;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.ForbiddenException;
 import javax.ws.rs.GET;
 import javax.ws.rs.NotFoundException;
@@ -19,7 +20,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriBuilder;
 
-@Path("/customers")
+@Path("customers")
 public class CustomerResource {
 	
 	@Inject
@@ -51,4 +52,11 @@ public class CustomerResource {
     public Customer findOne(@PathParam("id") Integer id) {
         return customerRepository.find(id).orElseThrow(() -> new NotFoundException("Customer not found."));
     }
+	
+	@DELETE
+	@Path("{id}")
+	public void delete(@PathParam("id") Integer id) {
+	   customerRepository.delete(id);
+	}
+	
 }
