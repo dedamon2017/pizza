@@ -20,6 +20,8 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriBuilder;
 
+import security.Secured;
+
 @Path("customers")
 public class CustomerResource {
 	
@@ -47,6 +49,7 @@ public class CustomerResource {
     }
 	
 	@GET
+	@Secured
     @Path("{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Customer findOne(@PathParam("id") Integer id) {
