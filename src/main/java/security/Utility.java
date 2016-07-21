@@ -1,32 +1,56 @@
 package security;
 
-import java.util.ResourceBundle;
+
+import java.io.InputStream;
+import java.util.Map;
+import java.util.Properties;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.logging.Logger;
 
 import javax.annotation.PostConstruct;
+import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.context.Dependent;
+import javax.inject.Singleton;
 
+
+
+@ApplicationScoped
 public class Utility {
-	private static final String ADMIN = "admin";
-	private static final String PASS = "qwerty";
-	private static final String RESOURCE_PATH = "main.java.security.";
-	private static ResourceBundle res = ResourceBundle.getBundle(RESOURCE_PATH + "users");
+	
+	private static final Logger LOGGER = Logger.getLogger(Utility.class.getName());
+	
+	private Properties properties = new Properties();
+	private final String fileName = "users.properties"; 
+	private Map<String, String> tokenDB = new ConcurrentHashMap<>();;
 	
 	@PostConstruct
-	public String getUserName() {
-		return res.getString("adminuser");
+	public void loadPropertiesAndInit() {
+		
+		try (InputStream inputStream = Utility.class.getClassLoader().getResourceAsStream(fileName)) {
+			properties.load(inputStream);
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}	
 	}
 	
-	@PostConstruct
-	public String getPassword() {
-		return res.getString("adminpassword");
+	public String getAdminUserName() {
+		return properties.getProperty("adminuser");
+	}
+	
+	public String getAdminPassword() {
+		return properties.getProperty("adminpassword");
+	}
+	
+	public void addToken(String userName, String token) {
+		tokenDB.put(userName, token);
+		LOGGER.info(String.format("Map %s", tokenDB.toString()));
 	}
 
-	public String getAdmin() {
-		return ADMIN;
+	public Map<String, String> getTokenDB() {
+		return tokenDB;
 	}
-
-	public String getPass() {
-		return PASS;
-	}
+	
 	
 	
 	

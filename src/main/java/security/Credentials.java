@@ -1,8 +1,8 @@
 package security;
 
-import java.io.Serializable;
 
-public class Credentials implements Serializable{
+
+public class Credentials{
 	
 	private String userName;
 	private String password;
@@ -17,7 +17,5 @@ public class Credentials implements Serializable{
 	}
 	public void setPassword(String password) {
 		this.password = password;
-	}
-	
-	
+	}	
 }

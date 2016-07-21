@@ -1,8 +1,9 @@
 package security;
 
-import java.util.UUID;
 
+import java.util.logging.Logger;
 
+import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -13,8 +14,8 @@ import javax.ws.rs.core.Response;
 @Path("/authentication")
 public class AuthenticationResource {
 	
-	
-	
+	@Inject
+	private Utility utility;
 	
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
@@ -25,6 +26,7 @@ public class AuthenticationResource {
 		try {
 			authenticate(userName, password);
 			String token = issueToken(userName);
+			addTokenToUtility(userName, token);
 			return Response.ok(token).build();
 		}
 		catch (Exception e) {
@@ -34,17 +36,17 @@ public class AuthenticationResource {
 	
 	
 	private void authenticate(String userName, String password) throws Exception {
-		//Utility utility = new Utility();
-		
-		if (!userName.equals("admin") || !password.equals("qwerty")) {
-		//if (!userName.equals(utility.getAdmin()) || !password.equals(utility.getPass())) {
+		if (!userName.equals(utility.getAdminUserName()) || !password.equals(utility.getAdminPassword())) {
 			throw new Exception();
 		}
 	}
 	
 	private String issueToken(String userName) {
-        
-		//return userName + UUID.randomUUID().toString().replaceAll("-", "").toUpperCase();
-		return userName + "ADMIN";
+        return userName + "ADMIN";
+	}
+	
+	private void addTokenToUtility(String userName, String token) {
+		utility.addToken(userName, token);
+	
 	}
 }

@@ -1,8 +1,10 @@
 package security;
 
 import java.io.IOException;
+import java.util.logging.Logger;
 
 import javax.annotation.Priority;
+import javax.inject.Inject;
 import javax.ws.rs.NotAuthorizedException;
 import javax.ws.rs.Priorities;
 import javax.ws.rs.container.ContainerRequestContext;
@@ -15,14 +17,17 @@ import javax.ws.rs.ext.Provider;
 @Provider
 @Priority(Priorities.AUTHENTICATION)
 public class AuthenticationFilter implements ContainerRequestFilter {
-
+	
+	private static final Logger LOGGER = Logger.getLogger(Utility.class.getName());
+	@Inject
+	private Utility utility;
 	@Override
 	public void filter(ContainerRequestContext requestContext) throws IOException {
 		String authorizationHeader = requestContext.getHeaderString(HttpHeaders.AUTHORIZATION);
 		if (authorizationHeader == null || !authorizationHeader.startsWith("admin")) {
 			throw new NotAuthorizedException("Authorization header must be provided");
 		}
-		String token = authorizationHeader.substring("admin".length()).trim();
+		String token = authorizationHeader;
 		
 		try {
 			validateToken(token);
@@ -34,7 +39,10 @@ public class AuthenticationFilter implements ContainerRequestFilter {
 	}
 	
 	public void validateToken(String token) throws Exception {
-		if (!token.equals("ADMIN")) {
+		//if (!token.equals("ADMIN")) {
+		String takenToken = (String) utility.getTokenDB().get("admin");
+		LOGGER.info(String.format("taken token is %s", takenToken));
+		if (!token.equals(takenToken)) {
 			throw new Exception();
 		}
 	}
