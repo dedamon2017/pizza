@@ -7,7 +7,7 @@ import customer.Customer;
 
 
 public class Order {
-	private long id;
+	private int id;
 	private Customer customer;
 	private LocalDate date;
 	private LocalTime esimatedTime;
@@ -15,9 +15,16 @@ public class Order {
 	private String courier;
 	private String address;
 	private String phoneNumber;
+	private boolean isCancel;
 	
 	
 	
+	public boolean isCancel() {
+		return isCancel;
+	}
+	public void setCancel(boolean isCancel) {
+		this.isCancel = isCancel;
+	}
 	public String getAddress() {
 		return address;
 	}
@@ -30,10 +37,10 @@ public class Order {
 	public void setPhoneNumber(String phoneNumber) {
 		this.phoneNumber = phoneNumber;
 	}
-	public long getId() {
+	public int getId() {
 		return id;
 	}
-	public void setId(long id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 	public Customer getCustomer() {
