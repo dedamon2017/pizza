@@ -3,12 +3,12 @@ package order;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
-import customer.Customer;
+
 
 
 public class Order {
 	private int id;
-	private Customer customer;
+	private String customerId;
 	private LocalDate date;
 	private LocalTime esimatedTime;
 	private LocalTime deliveryTime;
@@ -43,11 +43,12 @@ public class Order {
 	public void setId(int id) {
 		this.id = id;
 	}
-	public Customer getCustomer() {
-		return customer;
+	
+	public String getCustomerId() {
+		return customerId;
 	}
-	public void setCustomer(Customer customer) {
-		this.customer = customer;
+	public void setCustomerId(String customerId) {
+		this.customerId = customerId;
 	}
 	public LocalDate getDate() {
 		return date;

@@ -4,7 +4,8 @@ import java.time.LocalDateTime;
 
 public class Shipment {
 	private int ticket;
-	private int orderId;
+	private String orderId;
+	private String address;
 	private LocalDateTime recievedDateTime;
 	private LocalDateTime deliveredDateTime;
 	public int getTicket() {
@@ -13,10 +14,11 @@ public class Shipment {
 	public void setTicket(int ticket) {
 		this.ticket = ticket;
 	}
-	public int getOrderId() {
+
+	public String getOrderId() {
 		return orderId;
 	}
-	public void setOrderId(int orderId) {
+	public void setOrderId(String orderId) {
 		this.orderId = orderId;
 	}
 	public LocalDateTime getRecievedDateTime() {
@@ -30,5 +32,11 @@ public class Shipment {
 	}
 	public void setDeliveredDateTime(LocalDateTime deliveredDateTime) {
 		this.deliveredDateTime = deliveredDateTime;
+	}
+	public String getAddress() {
+		return address;
+	}
+	public void setAddress(String address) {
+		this.address = address;
 	}
 }
