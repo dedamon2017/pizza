@@ -1,5 +1,7 @@
 package security;
 
+import java.util.logging.Logger;
+
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
@@ -10,7 +12,7 @@ import javax.ws.rs.core.Response;
 
 @Path("/authentication")
 public class AuthenticationResource {
-	
+	private static final Logger LOGGER = Logger.getLogger(AuthenticationResource.class.getName());
 	@Inject
 	private Utility utility;
 	
@@ -44,6 +46,6 @@ public class AuthenticationResource {
 	
 	private void addTokenToUtility(String userName, String token) {
 		utility.addToken(userName, token);
-	
+		LOGGER.info(String.format("Added token is %s", utility.getTokenDB().get("admin")));
 	}
 }

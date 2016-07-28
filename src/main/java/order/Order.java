@@ -2,6 +2,7 @@ package order;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.List;
 
 
 
@@ -16,9 +17,16 @@ public class Order {
 	private String address;
 	private String phoneNumber;
 	private boolean isCancel;
+	private List<OrderLineItem> lineItemList;
 	
 	
 	
+	public List<OrderLineItem> getLineItemList() {
+		return lineItemList;
+	}
+	public void setLineItemList(List<OrderLineItem> lineItemList) {
+		this.lineItemList = lineItemList;
+	}
 	public boolean isCancel() {
 		return isCancel;
 	}

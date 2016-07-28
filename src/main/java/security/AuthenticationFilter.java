@@ -28,11 +28,12 @@ public class AuthenticationFilter implements ContainerRequestFilter {
 			throw new NotAuthorizedException("Authorization header must be provided");
 		}
 		String token = authorizationHeader;
-		
+		LOGGER.info(String.format("Authorization header token is %s", token));
 		try {
 			validateToken(token);
 		}
 		catch(Exception e) {
+			LOGGER.info("Failed to autorizate!");
 			requestContext.abortWith(Response.status(Response.Status.UNAUTHORIZED).build());
 		}
 		

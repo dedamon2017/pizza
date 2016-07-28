@@ -9,9 +9,11 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.annotation.PostConstruct;
+import javax.ejb.Stateless;
 import javax.enterprise.context.ApplicationScoped;
 
 @ApplicationScoped
+@Stateless
 public class OrderRepository {
 	private Map<Integer, Order> orderDB;
 	private AtomicInteger idCounter = new AtomicInteger();
