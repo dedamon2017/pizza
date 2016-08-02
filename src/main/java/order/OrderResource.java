@@ -1,6 +1,7 @@
 package order;
 
 import java.net.URI;
+import java.util.List;
 
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
@@ -21,6 +22,12 @@ public class OrderResource {
 	private OrderRepository orderRepository;
 	
 	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<Order> findAll() {
+		return orderRepository.findAll();
+	}
+	
+	@GET
 	@Path("{id}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Order findOne(@PathParam("id") Integer id) {
@@ -29,7 +36,7 @@ public class OrderResource {
 	
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
-	private Response create(Order order) {
+	public Response create(Order order) {
 		orderRepository.update(order);
 		URI location = UriBuilder.fromResource(OrderResource.class).path("{id}").build(order.getId());
 		return Response.created(location).build();

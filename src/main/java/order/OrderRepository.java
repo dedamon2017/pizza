@@ -1,5 +1,7 @@
 package order;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -9,14 +11,14 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.annotation.PostConstruct;
-import javax.ejb.Stateless;
+
 import javax.enterprise.context.ApplicationScoped;
 
 @ApplicationScoped
-@Stateless
+
 public class OrderRepository {
 	private Map<Integer, Order> orderDB;
-	private AtomicInteger idCounter = new AtomicInteger();
+	private AtomicInteger idCounter;
 	
 	@PostConstruct
 	public void init() {
@@ -43,6 +45,14 @@ public class OrderRepository {
 	public void update(Order order) {
 		Objects.requireNonNull(order);
 		order.setId(idCounter.incrementAndGet());
+		order.setCancel(false);
+		order.setAddress("Test address");
+		order.setDate(LocalDate.now());
+		order.setEsimatedTime(LocalTime.now());
+		order.setDeliveryTime(LocalTime.now().plusHours(2));
+		order.setPhoneNumber("+380984408389");
+		order.setCourier("Pavel");
+		
 		orderDB.put(order.getId(), order);
 	}
 }
