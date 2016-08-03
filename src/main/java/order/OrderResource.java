@@ -41,5 +41,4 @@ public class OrderResource {
 		URI location = UriBuilder.fromResource(OrderResource.class).path("{id}").build(order.getId());
 		return Response.created(location).build();
 	}
-
 }

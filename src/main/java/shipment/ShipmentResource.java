@@ -2,12 +2,11 @@ package shipment;
 
 import java.net.URI;
 import java.util.List;
-
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.NotFoundException;
-import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -33,6 +32,16 @@ public class ShipmentResource {
 		return shipmentRepository.find(id).orElseThrow(() -> new NotFoundException("Shipment not found."));
 	}
 	
+	@PUT
+	@Path("{id}")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response update(@PathParam("id") Integer id, Shipment shipment) {
+		shipmentRepository.updatePut(shipment);
+		URI location = UriBuilder.fromResource(ShipmentResource.class).path("{id}").build(shipment.getId());
+		return Response.created(location).build();
+		
+	}
 	/*
 	 * @POST
 	 * 

@@ -4,7 +4,10 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
+
+import javax.ejb.Stateless;
 import javax.enterprise.context.ApplicationScoped;
+import javax.faces.bean.RequestScoped;
 import javax.inject.Inject;
 import javax.ws.rs.NotFoundException;
 
@@ -47,7 +50,7 @@ public class OrderService {
 			order.setAddress(customerService.getCustomerAddress(customerId));
 			order.setPhoneNumber(customerService.getCustomerPhonenumber(customerId));
 		} else {
-			throw new NotFoundException("Customer not found");
+			throw new NotFoundException("Customer not found!!!");
 		}
 	}
 

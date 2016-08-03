@@ -8,6 +8,10 @@ public class CustomerService {
 	@Inject
 	private CustomerRepository customerRepository;
 
+	public boolean contains(Integer id) {
+		return customerRepository.contains(id);
+	}
+	
 	public String getCustomerName(Integer id) {
 		return customerRepository.find(id).get().getName();
 	}
@@ -20,7 +24,5 @@ public class CustomerService {
 		return customerRepository.find(id).get().getPhoneNumber();
 	}
 
-	public boolean contains(Integer id) {
-		return customerRepository.contains(id);
-	}
+	
 }

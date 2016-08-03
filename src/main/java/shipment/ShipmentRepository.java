@@ -9,12 +9,16 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
 
 @ApplicationScoped
 public class ShipmentRepository {
 	private Map<Integer, Shipment> shipmentDB;
 	private AtomicInteger idCounter;
-
+	
+	@Inject
+	private ShipmentService shipmentService;
+	
 	@PostConstruct
 	public void init() {
 		shipmentDB = new ConcurrentHashMap<>();
@@ -40,6 +44,11 @@ public class ShipmentRepository {
 	public void update(Shipment shipment) {
 		Objects.requireNonNull(shipment);
 		shipment.setId(idCounter.incrementAndGet());
+		shipmentDB.put(shipment.getId(), shipment);
+	}
+	
+	public void updatePut(Shipment shipment) {
+		shipmentService.setDeliveryDateTime(shipment);
 		shipmentDB.put(shipment.getId(), shipment);
 	}
 
