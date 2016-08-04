@@ -48,7 +48,7 @@ public class ShipmentRepository {
 	}
 	
 	public void updatePut(Shipment shipment) {
-		shipmentService.setDeliveryDateTime(shipment);
+//		shipmentService.setDeliveryDate(shipment);
 		shipmentDB.put(shipment.getId(), shipment);
 	}
 

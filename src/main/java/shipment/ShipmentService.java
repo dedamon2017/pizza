@@ -1,6 +1,7 @@
 package shipment;
 
-import java.time.LocalDateTime;
+
+import java.util.Date;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -16,12 +17,12 @@ public class ShipmentService {
 	public void createShipment(Order order) {
 		Shipment shipment = new Shipment();
 		shipment.setAddress(order.getAddress());
-		shipment.setRecievedDateTime(order.getDate().atTime(order.getEsimatedTime()));
+		shipment.setRecievedDate(order.getRecievedDate());
 		shipment.setOrderId(order.getId());
 		shipmentRepository.update(shipment);
 	}
 	
-	public void setDeliveryDateTime(Shipment shipment) {
-		shipment.setDeliveredDateTime(LocalDateTime.now());
+	public void setDeliveryDate(Shipment shipment) {
+		shipment.setDeliveredDate(new Date());
 	}
 }

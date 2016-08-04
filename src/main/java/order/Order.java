@@ -1,9 +1,11 @@
 package order;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
-import java.time.LocalTime;
+import java.util.Date;
 import java.util.List;
+
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 public class Order {
 	private int id;
@@ -11,13 +13,32 @@ public class Order {
 	private String customerName;
 	private String address;
 	private String phoneNumber;
-	private LocalDate date;
-	private LocalTime esimatedTime;
-	private LocalTime deliveryTime;
+	@JsonSerialize(using = converter.CustomDateSerializer.class)
+	@JsonDeserialize(using = converter.CustomDateDeserializer.class)
+	private Date recievedDate;
+	@JsonSerialize(using = converter.CustomDateSerializer.class)
+	@JsonDeserialize(using = converter.CustomDateDeserializer.class)
+	private Date deliveryTime;
 	private String courier;
 	private boolean isCancel;
 	private List<OrderLineItem> lineItemList;
 	private BigDecimal sum;
+
+	public Date getRecievedDate() {
+		return recievedDate;
+	}
+
+	public void setRecievedDate(Date recievedDate) {
+		this.recievedDate = recievedDate;
+	}
+
+	public Date getDeliveryTime() {
+		return deliveryTime;
+	}
+
+	public void setDeliveryTime(Date deliveryTime) {
+		this.deliveryTime = deliveryTime;
+	}
 
 	public String getCustomerName() {
 		return customerName;
@@ -81,30 +102,6 @@ public class Order {
 
 	public void setCustomerId(int customerId) {
 		this.customerId = customerId;
-	}
-
-	public LocalDate getDate() {
-		return date;
-	}
-
-	public void setDate(LocalDate date) {
-		this.date = date;
-	}
-
-	public LocalTime getEsimatedTime() {
-		return esimatedTime;
-	}
-
-	public void setEsimatedTime(LocalTime esimatedTime) {
-		this.esimatedTime = esimatedTime;
-	}
-
-	public LocalTime getDeliveryTime() {
-		return deliveryTime;
-	}
-
-	public void setDeliveryTime(LocalTime deliveryTime) {
-		this.deliveryTime = deliveryTime;
 	}
 
 	public String getCourier() {

@@ -1,15 +1,13 @@
 package order;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.logging.Logger;
-
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.ws.rs.NotFoundException;
-
 import customer.CustomerService;
 import shipment.ShipmentService;
 import shop.ShopService;
@@ -17,6 +15,7 @@ import shop.ShopService;
 @ApplicationScoped
 public class OrderService {
 	private static final Logger LOGGER = Logger.getLogger(OrderService.class.getName());
+	private static final int TIME_OF_DELIVERY = 2;
 
 	@Inject
 	private ShopService shopService;
@@ -45,7 +44,7 @@ public class OrderService {
 	}
 
 	public void searchCustomerById(Order order) {
-		
+
 		int customerId = order.getCustomerId();
 		LOGGER.info("Customer recieved number" + Integer.toString(customerId));
 		if (customerService.contains(customerId)) {
@@ -57,11 +56,17 @@ public class OrderService {
 		}
 	}
 
+	public Date getDeliveryTime() {
+		Calendar calendar = Calendar.getInstance();
+		calendar.add(Calendar.HOUR, TIME_OF_DELIVERY);
+		return calendar.getTime();
+
+	}
+
 	public void setCommonInfo(Order order) {
 		order.setCancel(false);
-		order.setDate(LocalDate.now());
-		order.setEsimatedTime(LocalTime.now());
-		order.setDeliveryTime(LocalTime.now().plusHours(2));
+		order.setRecievedDate(new Date());
+		order.setDeliveryTime(getDeliveryTime());
 		order.setCourier("Pavel");
 	}
 
