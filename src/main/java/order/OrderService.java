@@ -4,10 +4,9 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.logging.Logger;
 
-import javax.ejb.Stateless;
 import javax.enterprise.context.ApplicationScoped;
-import javax.faces.bean.RequestScoped;
 import javax.inject.Inject;
 import javax.ws.rs.NotFoundException;
 
@@ -17,6 +16,8 @@ import shop.ShopService;
 
 @ApplicationScoped
 public class OrderService {
+	private static final Logger LOGGER = Logger.getLogger(OrderService.class.getName());
+
 	@Inject
 	private ShopService shopService;
 	@Inject
@@ -44,7 +45,9 @@ public class OrderService {
 	}
 
 	public void searchCustomerById(Order order) {
-		int customerId = order.getId();
+		
+		int customerId = order.getCustomerId();
+		LOGGER.info("Customer recieved number" + Integer.toString(customerId));
 		if (customerService.contains(customerId)) {
 			order.setCustomerName(customerService.getCustomerName(customerId));
 			order.setAddress(customerService.getCustomerAddress(customerId));

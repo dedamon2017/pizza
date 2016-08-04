@@ -7,7 +7,7 @@ import java.util.List;
 
 public class Order {
 	private int id;
-	private String customerId;
+	private int customerId;
 	private String customerName;
 	private String address;
 	private String phoneNumber;
@@ -75,11 +75,11 @@ public class Order {
 		this.id = id;
 	}
 
-	public String getCustomerId() {
+	public int getCustomerId() {
 		return customerId;
 	}
 
-	public void setCustomerId(String customerId) {
+	public void setCustomerId(int customerId) {
 		this.customerId = customerId;
 	}
 
