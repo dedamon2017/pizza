@@ -51,6 +51,7 @@ public class OrderRepository {
 		updateOrderToMap(order);
 		orderservice.createShipment(order);
 	}
+
 	public void updateOrderToMap(Order order) {
 		orderDB.put(order.getId(), order);
 	}

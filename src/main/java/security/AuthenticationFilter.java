@@ -17,10 +17,11 @@ import javax.ws.rs.ext.Provider;
 @Provider
 @Priority(Priorities.AUTHENTICATION)
 public class AuthenticationFilter implements ContainerRequestFilter {
-	
+
 	private static final Logger LOGGER = Logger.getLogger(Utility.class.getName());
 	@Inject
 	private Utility utility;
+
 	@Override
 	public void filter(ContainerRequestContext requestContext) throws IOException {
 		String authorizationHeader = requestContext.getHeaderString(HttpHeaders.AUTHORIZATION);
@@ -31,21 +32,18 @@ public class AuthenticationFilter implements ContainerRequestFilter {
 		LOGGER.info(String.format("Authorization header token is %s", token));
 		try {
 			validateToken(token);
-		}
-		catch(Exception e) {
+		} catch (Exception e) {
 			LOGGER.info("Failed to autorizate!");
 			requestContext.abortWith(Response.status(Response.Status.UNAUTHORIZED).build());
 		}
-		
 	}
-	
+
 	public void validateToken(String token) throws Exception {
-		//if (!token.equals("ADMIN")) {
+		// if (!token.equals("ADMIN")) {
 		String takenToken = (String) utility.getTokenDB().get("admin");
 		LOGGER.info(String.format("taken token is %s", takenToken));
 		if (!token.equals(takenToken)) {
 			throw new Exception();
 		}
 	}
-	
 }

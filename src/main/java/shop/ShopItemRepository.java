@@ -15,8 +15,6 @@ public class ShopItemRepository {
 
 	private Map<Integer, ShopItem> shopItemDB;
 	private AtomicInteger idCounter = new AtomicInteger();
-	// private static final Logger LOGGER =
-	// Logger.getLogger(ShopItemRepository.class.getName());
 
 	@PostConstruct
 	public void init() {
@@ -33,10 +31,6 @@ public class ShopItemRepository {
 	}
 
 	public Optional<ShopItem> find(Integer id) {
-		/*
-		 * ShopItem item = shopItemDB.get(id) != null ? shopItemDB.get(id) : new
-		 * ShopItem(); return item;
-		 */
 		return Optional.ofNullable(shopItemDB.get(id));
 	}
 

@@ -9,14 +9,14 @@ import javax.inject.Inject;
 public class CustomerService {
 	@Inject
 	private CustomerRepository customerRepository;
-	
+
 	private static final Logger LOGGER = Logger.getLogger(CustomerService.class.getName());
-	
+
 	public boolean contains(Integer id) {
 		LOGGER.info(customerRepository.findAll().toString());
 		return customerRepository.contains(id);
 	}
-	
+
 	public String getCustomerName(Integer id) {
 		LOGGER.info(customerRepository.findAll().toString());
 		return customerRepository.find(id).get().getName();
@@ -32,5 +32,4 @@ public class CustomerService {
 		return customerRepository.find(id).get().getPhoneNumber();
 	}
 
-	
 }

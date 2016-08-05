@@ -4,12 +4,12 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.function.Supplier;
 import java.util.logging.Logger;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.ws.rs.NotFoundException;
 import customer.CustomerService;
-import shipment.Shipment;
 import shipment.ShipmentService;
 import shop.ShopService;
 
@@ -17,7 +17,7 @@ import shop.ShopService;
 public class OrderService {
 	private static final Logger LOGGER = Logger.getLogger(OrderService.class.getName());
 	private static final int TIME_OF_DELIVERY = 2;
-	
+
 	@Inject
 	private OrderRepository orderRepository;
 	@Inject
@@ -35,7 +35,7 @@ public class OrderService {
 				item.setShopItemName(shopService.getShopItemName(itemId));
 				item.setShopItemPrice(shopService.getShopItemPrice(itemId));
 			} else {
-				throw new NotFoundException("ShopItem not found");
+				throw new NotFoundException("ShopItem not found.");
 			}
 		});
 	}
@@ -55,7 +55,7 @@ public class OrderService {
 			order.setAddress(customerService.getCustomerAddress(customerId));
 			order.setPhoneNumber(customerService.getCustomerPhonenumber(customerId));
 		} else {
-			throw new NotFoundException("Customer not found!!!");
+			throw new NotFoundException("Customer not found.");
 		}
 	}
 
@@ -70,7 +70,6 @@ public class OrderService {
 		order.setCancel(false);
 		order.setRecievedDate(new Date());
 		order.setDeliveryTime(getDeliveryTime());
-		//order.setCourier("Pavel");
 	}
 
 	public void createShipment(Order order) {
@@ -80,9 +79,9 @@ public class OrderService {
 	private ArrayList<OrderLineItem> getOrderLineItems(Order order) {
 		return new ArrayList<>(order.getLineItemList());
 	}
-	
+
 	public void setDeliveredTime(int orderId, Date date) {
-		Order order = orderRepository.find(orderId).get();
+		Order order = orderRepository.find(orderId).orElseThrow(() -> new NotFoundException("Order not found."));
 		order.setDeliveredTime(date);
 		orderRepository.updateOrderToMap(order);
 		LOGGER.info("Order delivered time" + order.getDeliveredTime().toString());

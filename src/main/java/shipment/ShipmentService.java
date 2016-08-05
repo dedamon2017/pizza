@@ -1,6 +1,5 @@
 package shipment;
 
-
 import java.util.Date;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -16,7 +15,7 @@ public class ShipmentService {
 	private ShipmentRepository shipmentRepository;
 	@Inject
 	private OrderService orderService;
-	
+
 	public void createShipment(Order order) {
 		Shipment shipment = new Shipment();
 		shipment.setAddress(order.getAddress());
@@ -24,12 +23,11 @@ public class ShipmentService {
 		shipment.setOrderId(order.getId());
 		shipmentRepository.update(shipment);
 	}
-	
+
 	public void setOrderDeliveredTime(Shipment shipment) {
 		int orderId = shipment.getOrderId();
 		Date date = shipment.getDeliveredDate();
 		orderService.setDeliveredTime(orderId, date);
 	}
-	
-	
+
 }

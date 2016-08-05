@@ -21,13 +21,13 @@ public class CustomerRepository {
 	@PostConstruct
 	public void init() {
 		LOGGER.info("Create repository.");
-		customerDB = new ConcurrentHashMap<Integer, Customer>();
+		customerDB = new ConcurrentHashMap<>();
 		idCounter = new AtomicInteger(0);
 	}
 
 	public List<Customer> findAll() {
 		LOGGER.info("Find all.");
-		return new ArrayList<Customer>(customerDB.values());
+		return new ArrayList<>(customerDB.values());
 	}
 
 	public boolean contains(Integer id) {
