@@ -19,7 +19,7 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriBuilder;
 
 @Path("shopitems")
-public class ShopItemCustomerRsource {
+public class ShopItemResource {
 
 	@Inject
 	private ShopItemRepository itemRepository;
@@ -47,7 +47,7 @@ public class ShopItemCustomerRsource {
 			throw new ForbiddenException("ShopItem already exists.");
 		}
 		itemRepository.update(shopItem);
-		URI location = UriBuilder.fromResource(ShopItemCustomerRsource.class).path("{id}").build(shopItem.getId());
+		URI location = UriBuilder.fromResource(ShopItemResource.class).path("{id}").build(shopItem.getId());
 		return Response.created(location).build();
 	}
 

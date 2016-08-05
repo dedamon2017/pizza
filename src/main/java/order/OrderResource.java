@@ -38,6 +38,7 @@ public class OrderResource {
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response create(Order order) {
 		orderRepository.update(order);
+
 		URI location = UriBuilder.fromResource(OrderResource.class).path("{id}").build(order.getId());
 		return Response.created(location).build();
 	}
