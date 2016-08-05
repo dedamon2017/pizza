@@ -48,7 +48,10 @@ public class OrderRepository {
 		orderservice.sumOfOrder(order);
 		orderservice.searchCustomerById(order);
 		orderservice.setCommonInfo(order);
-		orderDB.put(order.getId(), order);
+		updateOrderToMap(order);
 		orderservice.createShipment(order);
+	}
+	public void updateOrderToMap(Order order) {
+		orderDB.put(order.getId(), order);
 	}
 }

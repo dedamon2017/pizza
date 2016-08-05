@@ -19,10 +19,21 @@ public class Order {
 	@JsonSerialize(using = converter.CustomDateSerializer.class)
 	@JsonDeserialize(using = converter.CustomDateDeserializer.class)
 	private Date deliveryTime;
+	@JsonSerialize(using = converter.CustomDateSerializer.class)
+	@JsonDeserialize(using = converter.CustomDateDeserializer.class)
+	private Date deliveredTime;
 	private String courier;
 	private boolean isCancel;
 	private List<OrderLineItem> lineItemList;
 	private BigDecimal sum;
+
+	public Date getDeliveredTime() {
+		return deliveredTime;
+	}
+
+	public void setDeliveredTime(Date deliveredTime) {
+		this.deliveredTime = deliveredTime;
+	}
 
 	public Date getRecievedDate() {
 		return recievedDate;

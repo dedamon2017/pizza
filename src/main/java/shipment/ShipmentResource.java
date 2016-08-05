@@ -35,21 +35,8 @@ public class ShipmentResource {
 	@PUT
 	@Path("{id}")
 	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response update(@PathParam("id") Integer id, Shipment shipment) {
+	//@Produces(MediaType.APPLICATION_JSON)
+	public void update(@PathParam("id") Integer id, Shipment shipment) {
 		shipmentRepository.updatePut(shipment);
-		URI location = UriBuilder.fromResource(ShipmentResource.class).path("{id}").build(shipment.getId());
-		return Response.created(location).build();
-		
-	}
-	/*
-	 * @POST
-	 * 
-	 * @Consumes(MediaType.APPLICATION_JSON) public Response create(Shipment
-	 * shipment) { shipmentRepository.update(shipment); URI location =
-	 * UriBuilder.fromResource(ShipmentResource.class).path("{id}").build(
-	 * shipment.getId()); return Response.created(location).build(); }
-	 */
-	
-	
+	}	
 }

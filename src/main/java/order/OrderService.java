@@ -9,6 +9,7 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.ws.rs.NotFoundException;
 import customer.CustomerService;
+import shipment.Shipment;
 import shipment.ShipmentService;
 import shop.ShopService;
 
@@ -16,7 +17,9 @@ import shop.ShopService;
 public class OrderService {
 	private static final Logger LOGGER = Logger.getLogger(OrderService.class.getName());
 	private static final int TIME_OF_DELIVERY = 2;
-
+	
+	@Inject
+	private OrderRepository orderRepository;
 	@Inject
 	private ShopService shopService;
 	@Inject
@@ -67,7 +70,7 @@ public class OrderService {
 		order.setCancel(false);
 		order.setRecievedDate(new Date());
 		order.setDeliveryTime(getDeliveryTime());
-		order.setCourier("Pavel");
+		//order.setCourier("Pavel");
 	}
 
 	public void createShipment(Order order) {
@@ -76,5 +79,12 @@ public class OrderService {
 
 	private ArrayList<OrderLineItem> getOrderLineItems(Order order) {
 		return new ArrayList<>(order.getLineItemList());
+	}
+	
+	public void setDeliveredTime(int orderId, Date date) {
+		Order order = orderRepository.find(orderId).get();
+		order.setDeliveredTime(date);
+		orderRepository.updateOrderToMap(order);
+		LOGGER.info("Order delivered time" + order.getDeliveredTime().toString());
 	}
 }

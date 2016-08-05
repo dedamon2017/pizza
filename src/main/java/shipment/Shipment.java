@@ -18,6 +18,15 @@ public class Shipment {
 	@JsonSerialize(using = converter.CustomDateSerializer.class)
 	@JsonDeserialize(using = converter.CustomDateDeserializer.class)
 	private Date deliveredDate;
+	private int courierId;
+
+	public int getCourierId() {
+		return courierId;
+	}
+
+	public void setCourierId(int courierId) {
+		this.courierId = courierId;
+	}
 
 	public int getId() {
 		return id;
