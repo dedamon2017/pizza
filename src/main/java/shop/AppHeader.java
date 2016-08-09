@@ -12,11 +12,12 @@ import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.core.Response.ResponseBuilder;
 
 import customer.CustomerResource;
+import good.GoodResource;
 import order.OrderResource;
 import shipment.ShipmentResource;
 
 @Path("/")
-public class ShopApplicationHeader {
+public class AppHeader {
 	private static final String APPLICATION_JSON = "aplication/json";
 	@HEAD
 	public Response head(@Context UriInfo uriInfo) {
@@ -24,7 +25,7 @@ public class ShopApplicationHeader {
 		URI customerUrl = absolute.clone().path(CustomerResource.class).build();
 		URI orderUrl = absolute.clone().path(OrderResource.class).build();
 		URI shipmentUrl = absolute.clone().path(ShipmentResource.class).build();
-		URI shopItemUrl = absolute.clone().path(ShopItemResource.class).build();
+		URI shopItemUrl = absolute.clone().path(GoodResource.class).build();
 		ResponseBuilder builder = Response.ok();
 		Link customers = Link.fromUri(customerUrl).rel("customers").type(APPLICATION_JSON).build();
 		Link orders = Link.fromUri(orderUrl).rel("orders").type(APPLICATION_JSON).build();

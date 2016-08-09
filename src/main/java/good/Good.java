@@ -1,8 +1,8 @@
-package shop;
+package good;
 
 import java.math.BigDecimal;
 
-public class ShopItem {
+public class Good {
 	private int id;
 	private String name;
 	private BigDecimal price;

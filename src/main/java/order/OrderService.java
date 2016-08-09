@@ -4,14 +4,13 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.function.Supplier;
 import java.util.logging.Logger;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.ws.rs.NotFoundException;
 import customer.CustomerService;
+import good.GoodService;
 import shipment.ShipmentService;
-import shop.ShopService;
 
 @ApplicationScoped
 public class OrderService {
@@ -21,7 +20,7 @@ public class OrderService {
 	@Inject
 	private OrderRepository orderRepository;
 	@Inject
-	private ShopService shopService;
+	private GoodService goodService;
 	@Inject
 	private CustomerService customerService;
 	@Inject
@@ -31,9 +30,9 @@ public class OrderService {
 		ArrayList<OrderLineItem> lineItems = getOrderLineItems(order);
 		lineItems.forEach(item -> {
 			int itemId = item.getShopItemId();
-			if (shopService.contains(itemId)) {
-				item.setShopItemName(shopService.getShopItemName(itemId));
-				item.setShopItemPrice(shopService.getShopItemPrice(itemId));
+			if (goodService.contains(itemId)) {
+				item.setShopItemName(goodService.getGoodName(itemId));
+				item.setShopItemPrice(goodService.getGoodPrice(itemId));
 			} else {
 				throw new NotFoundException("ShopItem not found.");
 			}

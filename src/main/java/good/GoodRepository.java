@@ -1,4 +1,4 @@
-package shop;
+package good;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,37 +11,37 @@ import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
 
 @ApplicationScoped
-public class ShopItemRepository {
+public class GoodRepository {
 
-	private Map<Integer, ShopItem> shopItemDB;
+	private Map<Integer, Good> goodDB;
 	private AtomicInteger idCounter = new AtomicInteger();
 
 	@PostConstruct
 	public void init() {
-		shopItemDB = new ConcurrentHashMap<>();
+		goodDB = new ConcurrentHashMap<>();
 		idCounter = new AtomicInteger(0);
 	}
 
-	public List<ShopItem> findAll() {
-		return new ArrayList<>(shopItemDB.values());
+	public List<Good> findAll() {
+		return new ArrayList<>(goodDB.values());
 	}
 
 	public boolean contains(Integer id) {
-		return shopItemDB.containsKey(id);
+		return goodDB.containsKey(id);
 	}
 
-	public Optional<ShopItem> find(Integer id) {
-		return Optional.ofNullable(shopItemDB.get(id));
+	public Optional<Good> find(Integer id) {
+		return Optional.ofNullable(goodDB.get(id));
 	}
 
 	public void delete(Integer id) {
-		shopItemDB.remove(id);
+		goodDB.remove(id);
 	}
 
-	public void update(ShopItem item) {
-		Objects.requireNonNull(item);
-		item.setId(idCounter.incrementAndGet());
-		shopItemDB.put(item.getId(), item);
+	public void update(Good good) {
+		Objects.requireNonNull(good);
+		good.setId(idCounter.incrementAndGet());
+		goodDB.put(good.getId(), good);
 	}
 
 }
