@@ -1,6 +1,7 @@
 package shipment;
 
 import java.util.List;
+
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -12,26 +13,30 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 @Path("shipments")
+@Produces(MediaType.APPLICATION_JSON)
+@Consumes(MediaType.APPLICATION_JSON)
 public class ShipmentResource {
-	@Inject
+
 	private ShipmentRepository shipmentRepository;
 
+	@Inject
+	public void setShipmentRepository(ShipmentRepository shipmentRepository) {
+		this.shipmentRepository = shipmentRepository;
+	}
+
 	@GET
-	@Produces(MediaType.APPLICATION_JSON)
 	public List<Shipment> findAll() {
 		return shipmentRepository.findAll();
 	}
 
 	@GET
 	@Path("{id}")
-	@Produces(MediaType.APPLICATION_JSON)
 	public Shipment findOne(@PathParam("id") Integer id) {
 		return shipmentRepository.find(id).orElseThrow(() -> new NotFoundException("Shipment not found."));
 	}
 
 	@PUT
 	@Path("{id}")
-	@Consumes(MediaType.APPLICATION_JSON)
 	public void update(@PathParam("id") Integer id, Shipment shipment) {
 		shipmentRepository.updatePut(shipment);
 	}

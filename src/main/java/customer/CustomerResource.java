@@ -22,19 +22,19 @@ import javax.ws.rs.core.UriBuilder;
 import security.Secured;
 
 @Path("customers")
+@Produces(MediaType.APPLICATION_JSON)
+@Consumes(MediaType.APPLICATION_JSON)
 public class CustomerResource {
 
 	@Inject
 	private CustomerRepository customerRepository;
 
 	@GET
-	@Produces(MediaType.APPLICATION_JSON)
 	public List<Customer> findAll() {
 		return customerRepository.findAll();
 	}
 
 	@POST
-	@Consumes(MediaType.APPLICATION_JSON)
 	public Response create(Customer customer) {
 		if (Objects.isNull(customer.getName()) || Objects.isNull(customer.getId())) {
 			throw new BadRequestException("Customer should have name and id.");
@@ -50,7 +50,6 @@ public class CustomerResource {
 	@GET
 	@Secured
 	@Path("{id}")
-	@Produces(MediaType.APPLICATION_JSON)
 	public Customer findOne(@PathParam("id") Integer id) {
 		return customerRepository.find(id).orElseThrow(() -> new NotFoundException("Customer not found."));
 	}

@@ -8,6 +8,7 @@ import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.logging.Logger;
+
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -19,9 +20,12 @@ public class ShipmentRepository {
 	private static final Logger LOGGER = Logger.getLogger(ShipmentRepository.class.getName());
 	private Map<Integer, Shipment> shipmentDB;
 	private AtomicInteger idCounter;
+	private ShipmentService shipmentService;
 
 	@Inject
-	private ShipmentService shipmentService;
+	public void setShipmentService(ShipmentService shipmentService) {
+		this.shipmentService = shipmentService;
+	}
 
 	@PostConstruct
 	public void init() {

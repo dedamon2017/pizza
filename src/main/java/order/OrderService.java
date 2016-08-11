@@ -5,9 +5,11 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.logging.Logger;
+
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.ws.rs.NotFoundException;
+
 import customer.CustomerService;
 import good.GoodService;
 import shipment.ShipmentService;
@@ -16,15 +18,30 @@ import shipment.ShipmentService;
 public class OrderService {
 	private static final Logger LOGGER = Logger.getLogger(OrderService.class.getName());
 	private static final int TIME_OF_DELIVERY = 2;
+	private OrderRepository orderRepository;
+	private GoodService goodService;
+	private CustomerService customerService;
+	private ShipmentService shipmentService;
 
 	@Inject
-	private OrderRepository orderRepository;
+	public void setOrderRepository(OrderRepository orderRepository) {
+		this.orderRepository = orderRepository;
+	}
+
 	@Inject
-	private GoodService goodService;
+	public void setGoodService(GoodService goodService) {
+		this.goodService = goodService;
+	}
+
 	@Inject
-	private CustomerService customerService;
+	public void setCustomerService(CustomerService customerService) {
+		this.customerService = customerService;
+	}
+
 	@Inject
-	private ShipmentService shipmentService;
+	public void setShipmentService(ShipmentService shipmentService) {
+		this.shipmentService = shipmentService;
+	}
 
 	public void searchShopItemById(Order order) {
 		ArrayList<OrderLineItem> lineItems = getOrderLineItems(order);

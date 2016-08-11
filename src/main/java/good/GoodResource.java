@@ -19,26 +19,31 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriBuilder;
 
 @Path("goods")
+@Produces(MediaType.APPLICATION_JSON)
+@Consumes(MediaType.APPLICATION_JSON)
 public class GoodResource {
-
-	@Inject
+	
 	private GoodRepository goodRepository;
+	
+	@Inject
+	public void setGoodRepository(GoodRepository goodRepository) {
+		this.goodRepository = goodRepository;
+	}
+
+	
 
 	@GET
-	@Produces(MediaType.APPLICATION_JSON)
 	public List<Good> findAll() {
 		return goodRepository.findAll();
 	}
 
 	@GET
 	@Path("{id}")
-	@Produces(MediaType.APPLICATION_JSON)
 	public Good findOne(@PathParam("id") Integer id) {
 		return goodRepository.find(id).orElseThrow(() -> new NotFoundException("Good not found."));
 	}
 
 	@POST
-	@Consumes(MediaType.APPLICATION_JSON)
 	public Response create(Good good) {
 		if (Objects.isNull(good.getName()) || Objects.isNull(good.getId())) {
 			throw new BadRequestException("Good should have name and id.");

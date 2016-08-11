@@ -8,8 +8,14 @@ import javax.inject.Inject;
 @ApplicationScoped
 public class GoodService {
 
-	@Inject
+	
 	private GoodRepository goodRepository;
+	
+	
+	@Inject
+	public void setGoodRepository(GoodRepository goodRepository) {
+		this.goodRepository = goodRepository;
+	}
 
 	public boolean contains(Integer id) {
 		return goodRepository.contains(id);

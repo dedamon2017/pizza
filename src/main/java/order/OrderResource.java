@@ -16,30 +16,33 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriBuilder;
 
 @Path("orders")
+@Produces(MediaType.APPLICATION_JSON)
+@Consumes(MediaType.APPLICATION_JSON)
 public class OrderResource {
 
-	@Inject
 	private OrderRepository orderRepository;
 
+	@Inject
+	public void setOrderRepository(OrderRepository orderRepository) {
+		this.orderRepository = orderRepository;
+	}
+
 	@GET
-	@Produces(MediaType.APPLICATION_JSON)
 	public List<Order> findAll() {
 		return orderRepository.findAll();
 	}
 
 	@GET
 	@Path("{id}")
-	@Produces(MediaType.APPLICATION_JSON)
 	public Order findOne(@PathParam("id") Integer id) {
 		return orderRepository.find(id).orElseThrow(() -> new NotFoundException("Order not found."));
 	}
 
 	@POST
-	@Consumes(MediaType.APPLICATION_JSON)
 	public Response create(Order order) {
 		orderRepository.update(order);
-
 		URI location = UriBuilder.fromResource(OrderResource.class).path("{id}").build(order.getId());
 		return Response.created(location).build();
 	}
+
 }

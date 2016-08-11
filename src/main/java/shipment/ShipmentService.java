@@ -11,10 +11,18 @@ import order.OrderService;
 @ApplicationScoped
 public class ShipmentService {
 
-	@Inject
 	private ShipmentRepository shipmentRepository;
-	@Inject
 	private OrderService orderService;
+
+	@Inject
+	public void setShipmentRepository(ShipmentRepository shipmentRepository) {
+		this.shipmentRepository = shipmentRepository;
+	}
+
+	@Inject
+	public void setOrderService(OrderService orderService) {
+		this.orderService = orderService;
+	}
 
 	public void createShipment(Order order) {
 		Shipment shipment = new Shipment();

@@ -16,8 +16,14 @@ public class OrderRepository {
 	private Map<Integer, Order> orderDB;
 	private AtomicInteger idCounter;
 
-	@Inject
+	
 	private OrderService orderservice;
+	
+	
+	@Inject
+	public void setOrderservice(OrderService orderservice) {
+		this.orderservice = orderservice;
+	}
 
 	@PostConstruct
 	public void init() {
