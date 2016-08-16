@@ -1,6 +1,8 @@
 package customer;
 
-import java.util.logging.Logger;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -10,26 +12,38 @@ public class CustomerService {
 	@Inject
 	private CustomerRepository customerRepository;
 
-	private static final Logger LOGGER = Logger.getLogger(CustomerService.class.getName());
-
 	public boolean contains(Integer id) {
-		LOGGER.info(customerRepository.findAll().toString());
 		return customerRepository.contains(id);
 	}
 
 	public String getCustomerName(Integer id) {
-		LOGGER.info(customerRepository.findAll().toString());
 		return customerRepository.find(id).get().getName();
 	}
 
 	public String getCustomerAddress(Integer id) {
-		LOGGER.info(customerRepository.findAll().toString());
 		return customerRepository.find(id).get().getAddress();
 	}
 
 	public String getCustomerPhonenumber(Integer id) {
-		LOGGER.info(customerRepository.findAll().toString());
 		return customerRepository.find(id).get().getPhoneNumber();
+	}
+
+	public void delete(Integer id) {
+		customerRepository.delete(id);
+	}
+
+	public Optional<Customer> find(Integer id) {
+		return customerRepository.find(id);
+	}
+
+	public void createNew(Customer customer) {
+		Objects.requireNonNull(customer);
+		customerRepository.createId(customer);
+		customerRepository.updateToMap(customer);
+	}
+
+	public List<Customer> findAll() {
+		return customerRepository.findAll();
 	}
 
 }

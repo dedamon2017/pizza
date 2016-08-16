@@ -26,12 +26,16 @@ import security.Secured;
 @Consumes(MediaType.APPLICATION_JSON)
 public class CustomerResource {
 
+	private CustomerService customerService;
+
 	@Inject
-	private CustomerRepository customerRepository;
+	public void setCustomerResource(CustomerService customerResource) {
+		this.customerService = customerResource;
+	}
 
 	@GET
 	public List<Customer> findAll() {
-		return customerRepository.findAll();
+		return customerService.findAll();
 	}
 
 	@POST
@@ -39,10 +43,10 @@ public class CustomerResource {
 		if (Objects.isNull(customer.getName()) || Objects.isNull(customer.getId())) {
 			throw new BadRequestException("Customer should have name and id.");
 		}
-		if (customerRepository.contains(customer.getId())) {
+		if (customerService.contains(customer.getId())) {
 			throw new ForbiddenException("Customer already exists.");
 		}
-		customerRepository.update(customer);
+		customerService.createNew(customer);
 		URI location = UriBuilder.fromResource(CustomerResource.class).path("{id}").build(customer.getId());
 		return Response.created(location).build();
 	}
@@ -51,13 +55,13 @@ public class CustomerResource {
 	@Secured
 	@Path("{id}")
 	public Customer findOne(@PathParam("id") Integer id) {
-		return customerRepository.find(id).orElseThrow(() -> new NotFoundException("Customer not found."));
+		return customerService.find(id).orElseThrow(() -> new NotFoundException("Customer not found."));
 	}
 
 	@DELETE
 	@Path("{id}")
 	public void delete(@PathParam("id") Integer id) {
-		customerRepository.delete(id);
+		customerService.delete(id);
 	}
 
 }

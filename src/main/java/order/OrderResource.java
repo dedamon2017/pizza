@@ -20,27 +20,27 @@ import javax.ws.rs.core.UriBuilder;
 @Consumes(MediaType.APPLICATION_JSON)
 public class OrderResource {
 
-	private OrderRepository orderRepository;
+	private OrderService orderService;
 
 	@Inject
-	public void setOrderRepository(OrderRepository orderRepository) {
-		this.orderRepository = orderRepository;
+	public void setOrderService(OrderService orderService) {
+		this.orderService = orderService;
 	}
 
 	@GET
 	public List<Order> findAll() {
-		return orderRepository.findAll();
+		return orderService.findAll();
 	}
 
 	@GET
 	@Path("{id}")
 	public Order findOne(@PathParam("id") Integer id) {
-		return orderRepository.find(id).orElseThrow(() -> new NotFoundException("Order not found."));
+		return orderService.find(id).orElseThrow(() -> new NotFoundException("Order not found."));
 	}
 
 	@POST
 	public Response create(Order order) {
-		orderRepository.update(order);
+		orderService.createNew(order);
 		URI location = UriBuilder.fromResource(OrderResource.class).path("{id}").build(order.getId());
 		return Response.created(location).build();
 	}

@@ -3,33 +3,33 @@ package order;
 import java.math.BigDecimal;
 
 public class OrderLineItem {
-	private int shopItemId;
+	private int goodId;
 	private int quantity;
-	private String shopItemName;
-	private BigDecimal shopItemPrice;
+	private String goodName;
+	private BigDecimal goodPrice;
 
-	public String getShopItemName() {
-		return shopItemName;
+	public String getGoodName() {
+		return goodName;
 	}
 
-	public void setShopItemName(String shopItemName) {
-		this.shopItemName = shopItemName;
+	public void setGoodName(String goodName) {
+		this.goodName = goodName;
 	}
 
-	public BigDecimal getShopItemPrice() {
-		return shopItemPrice;
+	public BigDecimal getGoodPrice() {
+		return goodPrice;
 	}
 
-	public void setShopItemPrice(BigDecimal shopItemPrice) {
-		this.shopItemPrice = shopItemPrice;
+	public void setGoodPrice(BigDecimal goodPrice) {
+		this.goodPrice = goodPrice;
 	}
 
-	public int getShopItemId() {
-		return shopItemId;
+	public int getGoodId() {
+		return goodId;
 	}
 
-	public void setShopItemId(int shopItemId) {
-		this.shopItemId = shopItemId;
+	public void setGoodId(int goodId) {
+		this.goodId = goodId;
 	}
 
 	public int getQuantity() {

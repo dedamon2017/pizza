@@ -3,27 +3,17 @@ package order;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
+
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
 
 @ApplicationScoped
 public class OrderRepository {
 	private Map<Integer, Order> orderDB;
 	private AtomicInteger idCounter;
-
-	
-	private OrderService orderservice;
-	
-	
-	@Inject
-	public void setOrderservice(OrderService orderservice) {
-		this.orderservice = orderservice;
-	}
 
 	@PostConstruct
 	public void init() {
@@ -47,18 +37,11 @@ public class OrderRepository {
 		orderDB.remove(id);
 	}
 
-	public void update(Order order) {
-		Objects.requireNonNull(order);
+	public void createId(Order order) {
 		order.setId(idCounter.incrementAndGet());
-		orderservice.searchShopItemById(order);
-		orderservice.sumOfOrder(order);
-		orderservice.searchCustomerById(order);
-		orderservice.setCommonInfo(order);
-		updateOrderToMap(order);
-		orderservice.createShipment(order);
 	}
 
-	public void updateOrderToMap(Order order) {
+	public void updateToMap(Order order) {
 		orderDB.put(order.getId(), order);
 	}
 }

@@ -17,27 +17,27 @@ import javax.ws.rs.core.MediaType;
 @Consumes(MediaType.APPLICATION_JSON)
 public class ShipmentResource {
 
-	private ShipmentRepository shipmentRepository;
+	private ShipmentService shipmentService;
 
 	@Inject
-	public void setShipmentRepository(ShipmentRepository shipmentRepository) {
-		this.shipmentRepository = shipmentRepository;
+	public void setShipmentRepository(ShipmentService shipmentService) {
+		this.shipmentService = shipmentService;
 	}
 
 	@GET
 	public List<Shipment> findAll() {
-		return shipmentRepository.findAll();
+		return shipmentService.findAll();
 	}
 
 	@GET
 	@Path("{id}")
 	public Shipment findOne(@PathParam("id") Integer id) {
-		return shipmentRepository.find(id).orElseThrow(() -> new NotFoundException("Shipment not found."));
+		return shipmentService.find(id).orElseThrow(() -> new NotFoundException("Shipment not found."));
 	}
 
 	@PUT
 	@Path("{id}")
 	public void update(@PathParam("id") Integer id, Shipment shipment) {
-		shipmentRepository.updatePut(shipment);
+		shipmentService.updateDelivered(shipment);
 	}
 }

@@ -7,6 +7,7 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
+
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
 
@@ -38,9 +39,11 @@ public class GoodRepository {
 		goodDB.remove(id);
 	}
 
-	public void update(Good good) {
-		Objects.requireNonNull(good);
+	public void createId(Good good) {
 		good.setId(idCounter.incrementAndGet());
+	}
+	
+	public void updateToMap(Good good) {
 		goodDB.put(good.getId(), good);
 	}
 
