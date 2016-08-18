@@ -10,6 +10,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 
+import shop.AppException;
+
 public class CustomDateDeserializer extends JsonDeserializer<Date> {
 	private SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
 
@@ -20,7 +22,7 @@ public class CustomDateDeserializer extends JsonDeserializer<Date> {
 		try {
 			return formatter.parse(date);
 		} catch (ParseException exception) {
-			throw new RuntimeException(exception);
+			throw new AppException("Could not deserialize", exception);
 		}
 	}
 }

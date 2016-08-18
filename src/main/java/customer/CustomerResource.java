@@ -29,8 +29,8 @@ public class CustomerResource {
 	private CustomerService customerService;
 
 	@Inject
-	public void setCustomerResource(CustomerService customerResource) {
-		this.customerService = customerResource;
+	public void setCustomerResource(CustomerService customerService) {
+		this.customerService = customerService;
 	}
 
 	@GET

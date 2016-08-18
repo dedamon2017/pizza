@@ -51,21 +51,45 @@ public class OrderService {
 		lineItems.forEach(item -> {
 			int itemId = item.getGoodId();
 			if (goodService.contains(itemId)) {
+				item.setGoodName(goodService.getGood(itemId).getName());
+				item.setGoodPrice(goodService.getGood(itemId).getPrice());
+			} else {
+				throw new AppException("ShopItem not found.");
+			}
+		});
+	}
+	/*public void searchGoodById(Order order) {
+		ArrayList<OrderLineItem> lineItems = getOrderLineItems(order);
+		lineItems.forEach(item -> {
+			int itemId = item.getGoodId();
+			if (goodService.contains(itemId)) {
 				item.setGoodName(goodService.getGoodName(itemId));
 				item.setGoodPrice(goodService.getGoodPrice(itemId));
 			} else {
 				throw new AppException("ShopItem not found.");
 			}
 		});
-	}
+	}*/
 
 	public void sumOfOrder(Order order) {
 		ArrayList<OrderLineItem> lineItems = getOrderLineItems(order);
 		Optional<BigDecimal> sum = lineItems.stream().map(OrderLineItem::getGoodPrice).reduce(BigDecimal::add);
 		order.setSum(sum.orElseGet(() -> new BigDecimal(0)));
 	}
-
+	
 	public void searchCustomerById(Order order) {
+		int customerId = order.getCustomerId();
+		LOGGER.info("Customer recieved number" + Integer.toString(customerId));
+		if (customerService.contains(customerId)) {
+			order.setCustomerName(customerService.getCustomer(customerId).getName());
+			order.setAddress(customerService.getCustomer(customerId).getAddress());
+			order.setPhoneNumber(customerService.getCustomer(customerId).getPhoneNumber());
+		} else {
+			throw new AppException("Customer not found.");
+		}
+	}
+	
+	/*public void searchCustomerById(Order order) {
 
 		int customerId = order.getCustomerId();
 		LOGGER.info("Customer recieved number" + Integer.toString(customerId));
@@ -76,7 +100,7 @@ public class OrderService {
 		} else {
 			throw new AppException("Customer not found.");
 		}
-	}
+	}*/
 
 	public Date getDeliveryTime() {
 		Calendar calendar = Calendar.getInstance();
@@ -100,10 +124,9 @@ public class OrderService {
 	}
 
 	public void setDeliveredTime(int orderId, Date date) {
-		Order order = orderRepository.find(orderId).orElseThrow(() -> new AppException("Order not found."));
+		Order order = find(orderId).orElseThrow(() -> new AppException("Could not find order."));
 		order.setDeliveredTime(date);
 		orderRepository.updateToMap(order);
-		LOGGER.info("Order delivered time" + order.getDeliveredTime().toString());
 	}
 
 	public void createNew(Order order) {

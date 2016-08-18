@@ -24,14 +24,18 @@ public class GoodService {
 		return goodRepository.contains(id);
 	}
 
-	public String getGoodName(Integer id) {
+	public Good getGood(Integer id) {
+		return find(id).orElseThrow(() -> new AppException("Could not find good."));
+	}
+	
+	/*public String getGoodName(Integer id) {
 		// return goodRepository.find(id).get().getName();
 		return goodRepository.find(id).orElseThrow(() -> new AppException("Could not find good.")).getName();
 	}
 
 	public BigDecimal getGoodPrice(Integer id) {
 		return goodRepository.find(id).orElseThrow(() -> new AppException("Could not find good.")).getPrice();
-	}
+	}*/
 
 	public List<Good> findAll() {
 		return goodRepository.findAll();

@@ -7,6 +7,8 @@ import java.util.Optional;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
+import shop.AppException;
+
 @ApplicationScoped
 public class CustomerService {
 	@Inject
@@ -15,8 +17,12 @@ public class CustomerService {
 	public boolean contains(Integer id) {
 		return customerRepository.contains(id);
 	}
-
-	public String getCustomerName(Integer id) {
+	
+	public Customer getCustomer(Integer id) {
+		return find(id).orElseThrow(() -> new AppException("Could not find customer"));
+	}
+	
+	/*public String getCustomerName(Integer id) {
 		return customerRepository.find(id).get().getName();
 	}
 
@@ -26,7 +32,7 @@ public class CustomerService {
 
 	public String getCustomerPhonenumber(Integer id) {
 		return customerRepository.find(id).get().getPhoneNumber();
-	}
+	}*/
 
 	public void delete(Integer id) {
 		customerRepository.delete(id);
